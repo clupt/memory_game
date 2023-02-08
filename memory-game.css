@@ -1,9 +1,46 @@
 /* you can add to or change this. */
+h1 {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
 
 #game div {
     border: 1px solid black;
-    width: 100px;
-    height: 100px;
-    margin: 20px;
+    width: 200px;
+    height: 200px;
+    margin: 10px;
     display: inline-block;
   }
+
+.card {
+  border-radius: 10px;
+}
+
+.card.matched {
+  transform: scale(.5);
+}
+
+.red {
+  background-color: red;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.green {
+  background-color: green;
+}
+
+.orange {
+  background-color: orange;
+}
+
+.purple {
+  background-color: purple;
+}
+
+.face-down {
+  background-color: white;
+}
