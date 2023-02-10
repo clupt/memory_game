@@ -47,12 +47,21 @@ function createCards(colors) {
     //add attributes (data-id and data-color) to the card
     //add eventListener for handling the click event to each card
     //then append it to the gameboard
+
     const card = document.createElement('div');
-    card.classList.add(colors[i], 'face-down', 'card');
+    const front = document.createElement('div');
+
+    card.classList.add('face-down', 'card');
+    front.classList.add('front');
+
+    front.style.backgroundColor = colors[i];
+
     card.setAttribute('data-color', colors[i]);
     card.setAttribute('data-id', i);
     card.addEventListener('click', handleCardClick);
+
     gameBoard.appendChild(card);
+    card.appendChild(front);
   }
 }
 
@@ -163,13 +172,14 @@ function resetGame() {
 
 /** TODOS
  * add button to start the game
+ * learn css grid
  * revisit color and number of card hardcoding
  * (allow for variable number of cards and randomized colors or images)
  * improve too many clicks reaction (non-alert)
  * create a timer
  * create a number of guesses display to keep score
  * store best lowest time / fewest guesses score in local storage
- * add card flip animation and styling (refactor flip/unflip functions)
+ * fix card flip animation and styling (refactor flip/unflip functions)
  * need to improve case for last match (victory condition)
  * -- reach thought: add shuffle animation at the beginning that deals out cards
 */
