@@ -9,8 +9,12 @@ const COLORS = [
 ];
 
 const colors = shuffle(COLORS);
+const header = document.querySelector('#header');
+const timerContainer = document.querySelector('#timer-container');
 
 createCards(colors);
+createHeader();
+addTimer();
 
 /** Shuffle array items in-place and return shuffled array. */
 
@@ -28,6 +32,30 @@ function shuffle(items) {
   }
 
   return items;
+}
+
+
+//randomly generated colors for title
+function createHeader() {
+  const title = 'MEMORY_GAME';
+  const h1 = document.createElement('h1');
+  for (let i = 0; i < title.length; i++) {
+    const charSpan = document.createElement('span');
+    charSpan.innerText = title[i];
+    const random = Math.floor(Math.random() * COLORS.length);
+    charSpan.style.color = COLORS[random];
+    charSpan.classList.add('title-char');
+    h1.appendChild(charSpan);
+  }
+  header.appendChild(h1);
+}
+
+//create a timer that counts up and stops when game ends
+function addTimer() {
+  const clock = document.createElement('div');
+  clock.classList.add('clock');
+  clock.innerText = ':00';
+  timerContainer.appendChild(clock);
 }
 
 /** Create card for every color in colors (each will appear twice)
@@ -172,11 +200,10 @@ function resetGame() {
 
 /** TODOS
  * add button to start the game
- * learn css grid
- * revisit color and number of card hardcoding
+ * function for timer
+ * revisit color and number hardcoding
  * (allow for variable number of cards and randomized colors or images)
  * improve too many clicks reaction (non-alert)
- * create a timer
  * create a number of guesses display to keep score
  * store best lowest time / fewest guesses score in local storage
  * fix card flip animation and styling (refactor flip/unflip functions)

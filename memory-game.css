@@ -50,20 +50,59 @@ table {
 
 /* custom styling */
 
+:root {
+  --primary: rgb(246, 226, 197);
+  --secondary: rgb(198, 129, 60);
+  --tertiary: rgb(164, 164, 164);
+}
+
 body {
   box-sizing: border-box;
+}
+
+.title-char {
+  /* text-shadow: 4px 2px .5px rgba(95, 88, 88, 0.5); */
+  box-shadow: 8px 3px rgba(54, 51, 51, 0.51);
+  padding-bottom: 15px;
+  transition: all .4s ease-out;
+}
+
+.title-char:hover {
+  transform: rotateY(180deg);
 }
 
 h1 {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   align-self: center;
-  font-size: 40px;
-  background-color: peru;
-
+  font-size: 5em;
+  font-family: 'Bungee Shade', 'monoton', sans-serif;
+  background-color: var(--secondary);
 }
+
+/* timer styling */
+#timer-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  background-color: var(--secondary);
+}
+
+.clock {
+  display: flex;
+  font-family: 'Bungee Shade';
+  font-size: 5rem;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+  min-width: 100px;
+}
+
+
 #game {
-  background-color: blanchedalmond;
+  background-color: var(--secondary);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -74,18 +113,21 @@ h1 {
 #game div{
     position: relative;
     border: 1px solid black;
-    width: 200px;
-    height: 200px;
+    min-width: 200px;
+    min-height: 200px;
     display: inline-block;
 }
 
 .card {
+  background-image: url(imgs/simone-secci-49uySSA678U-unsplash.jpg);
+  background-size: contain;
+  background-position-x: center;
+  box-shadow: 10px 10px rgba(0, 0, 0, 0.7);
   margin: 20px;
-  /* position: relative; */
   border-radius: 10px;
   transform-style: preserve-3d;
   transition: transform .3s ease-out;
-  background-color: silver;
+  background-color: var(--tertiary);
 }
 
 .card.matched {
@@ -107,3 +149,11 @@ h1 {
 .face-down:hover {
   background-color: slategrey;
 }
+
+
+/*       TODOS
+
+  fix card images
+  fix timer styles
+
+*/
