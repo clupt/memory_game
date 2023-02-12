@@ -10,11 +10,14 @@ const COLORS = [
 
 const colors = shuffle(COLORS);
 const header = document.querySelector('#header');
+const btnContainer = document.querySelector('.button-container');
 const timerContainer = document.querySelector('#timer-container');
+const clockContainer = document.querySelector('#clock-container');
+const startBtn = document.querySelector('#start');
+const clock = document.querySelector('#clock');
+const title = 'MEMORY_GAME';
+startBtn.addEventListener('click', startTimer);
 
-createCards(colors);
-createHeader();
-addTimer();
 
 /** Shuffle array items in-place and return shuffled array. */
 
@@ -34,10 +37,8 @@ function shuffle(items) {
   return items;
 }
 
-
 //randomly generated colors for title
 function createHeader() {
-  const title = 'MEMORY_GAME';
   const h1 = document.createElement('h1');
   for (let i = 0; i < title.length; i++) {
     const charSpan = document.createElement('span');
@@ -52,10 +53,28 @@ function createHeader() {
 
 //create a timer that counts up and stops when game ends
 function addTimer() {
-  const clock = document.createElement('div');
   clock.classList.add('clock');
   clock.innerText = ':00';
-  timerContainer.appendChild(clock);
+  clockContainer.appendChild(clock);
+}
+
+let seconds = 0;
+let interval;
+
+function timer() {
+  seconds++;
+  if (seconds < 10) {
+    seconds = '0' + seconds;
+  }
+  clock.innerText = `: ${seconds}`;
+}
+
+function startTimer() {
+  createHeader();
+  addTimer();
+  createCards(colors);
+  interval = setInterval(timer, 1000);
+  btnContainer.remove();
 }
 
 /** Create card for every color in colors (each will appear twice)
@@ -199,8 +218,9 @@ function resetGame() {
 }
 
 /** TODOS
- * add button to start the game
- * function for timer
+
+ * function for timer - separate concerns for making card deck & starting timer
+ * or put everything into the start button
  * revisit color and number hardcoding
  * (allow for variable number of cards and randomized colors or images)
  * improve too many clicks reaction (non-alert)
