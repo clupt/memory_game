@@ -16,7 +16,10 @@ const clockContainer = document.querySelector('#clock-container');
 const startBtn = document.querySelector('#start');
 const clock = document.querySelector('#clock');
 const title = 'MEMORY_GAME';
+
 startBtn.addEventListener('click', startTimer);
+
+createHeader();
 
 
 /** Shuffle array items in-place and return shuffled array. */
@@ -61,6 +64,7 @@ function addTimer() {
 let seconds = 0;
 let interval;
 
+//timer function to increment the clock
 function timer() {
   seconds++;
   if (seconds < 10) {
@@ -69,17 +73,18 @@ function timer() {
   clock.innerText = `: ${seconds}`;
 }
 
+//start the timer and call timer function with setinterval to run the clock
+//also remove the start button and populate the gameBoard
 function startTimer() {
-  createHeader();
-  addTimer();
   createCards(colors);
-  interval = setInterval(timer, 1000);
   btnContainer.remove();
+  addTimer();
+  interval = setInterval(timer, 1000);
 }
 
 /** Create card for every color in colors (each will appear twice)
  *
- * Each div DOM element will have:
+ *  Each div DOM element will have:
  * - a class with the value of the color
  * - a click event listener for each card to handleCardClick
  */
@@ -139,6 +144,7 @@ let matchedArr = [];
 let clickCount = 0;
 
 function handleCardClick(e) {
+
   /**
    * flip target of click event
    * increment click counter
@@ -220,13 +226,11 @@ function resetGame() {
 /** TODOS
 
  * function for timer - separate concerns for making card deck & starting timer
- * or put everything into the start button
  * revisit color and number hardcoding
  * (allow for variable number of cards and randomized colors or images)
  * improve too many clicks reaction (non-alert)
  * create a number of guesses display to keep score
  * store best lowest time / fewest guesses score in local storage
- * fix card flip animation and styling (refactor flip/unflip functions)
  * need to improve case for last match (victory condition)
  * -- reach thought: add shuffle animation at the beginning that deals out cards
 */
