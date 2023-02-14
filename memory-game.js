@@ -248,12 +248,12 @@ function resetGame() {
 
 /** TODOS
 
- * function for timer - separate concerns for making card deck & starting timer
  * revisit color and number hardcoding
  * (allow for variable number of cards and randomized colors or images)
- * improve too many clicks reaction (non-alert)
- * style scores display
+
  * need to improve case for last match (victory condition)
  * -- reach thought: add shuffle animation at the beginning that deals out cards
+
+ *  * improve too many clicks reaction (non-alert)
  * -- bug : when same card is clicked twice quickly, it doesn't reset properly
 */
