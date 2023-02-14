@@ -128,12 +128,14 @@ function createCards(colors) {
 
 function flipCard(card) {
   card.classList.remove('face-down');
+  card.classList.add('unclickable');
 }
 
 /** Flip a card face-down. */
 
 function unFlipCard(card) {
   card.classList.add('face-down');
+  card.classList.remove('unclickable');
 }
 
 /** Handle clicking on a card: this could be first-card or second-card.
@@ -169,7 +171,6 @@ function handleCardClick(e) {
 
   //display live clickScore
   clickScore++;
-  console.log(clickScore);
   clickScoreSpan.innerText = clickScore;
 
   //case for too many clicks too quickly (REVISIT)
@@ -208,8 +209,10 @@ function handleCardClick(e) {
       setTimeout(() => {
         if (clickScore < parseInt(localStorage.best) || localStorage.best === undefined) {
           localStorage.setItem('best', clickScore);
+          alert(`A new best! Your score was ${clickScore}.`);
+        } else {
+          alert(`Nice! Your score was ${clickScore}.`);
         }
-        alert('VICTORY!');
         resetGame();
       }, FOUND_MATCH_WAIT_MSECS);
     }
@@ -243,9 +246,9 @@ function resetClickedArr() {
   clickedArr = [];
 }
 
-function resetMatchedArr() {
-  matchedArr = [];
-}
+// function resetMatchedArr() {
+//   matchedArr = [];
+// }
 
 //(need to refactor this so a win can store the score before reset game occurs)
 function resetGame() {
@@ -261,5 +264,4 @@ function resetGame() {
  * -- reach thought: add shuffle animation at the beginning that deals out cards
 
  *  * improve too many clicks reaction (non-alert)
- * -- bug : when same card is clicked twice quickly, it doesn't reset properly
 */

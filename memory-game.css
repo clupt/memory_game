@@ -185,6 +185,10 @@ h1 {
   transform: scale(.5);
 }
 
+.unclickable {
+  pointer-events: none;
+}
+
 .front {
   width: 100%;
   height: 100%;
@@ -197,9 +201,9 @@ h1 {
   transform: rotateY(180deg);
 }
 
-.face-down:hover {
+/* .face-down:hover {
   background-color: var(--tertiary);
-}
+} */
 
 @keyframes spin {
   0%, 100%{
