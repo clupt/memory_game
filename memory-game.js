@@ -16,6 +16,8 @@ const clockContainer = document.querySelector('#clock-container');
 const startBtn = document.querySelector('#start');
 const clock = document.querySelector('#clock');
 const title = 'MEMORY_GAME';
+const clickScoreSpan = document.querySelector('#clickScore');
+const bestScoreSpan = document.querySelector('#bestScore');
 
 startBtn.addEventListener('click', startTimer);
 
@@ -62,7 +64,6 @@ function addTimer() {
 }
 
 let seconds = 0;
-let interval;
 
 //timer function to increment the clock
 function timer() {
@@ -79,7 +80,7 @@ function startTimer() {
   createCards(colors);
   btnContainer.remove();
   addTimer();
-  interval = setInterval(timer, 1000);
+  let interval = setInterval(timer, 1000);
 }
 
 /** Create card for every color in colors (each will appear twice)
@@ -139,9 +140,14 @@ function unFlipCard(card) {
  *  once the matchedArr length equals the colors array length --> Game Over
 */
 
+//create an array for the clicked cards
 let clickedArr = [];
+//create an array for the matched cards
 let matchedArr = [];
+//store a click count prevent more than two clicks
 let clickCount = 0;
+//store a clickScore to keep best score in local storage
+let clickScore = 0;
 
 function handleCardClick(e) {
 
@@ -154,6 +160,11 @@ function handleCardClick(e) {
   flipCard(e.target);
   clickCount += 1;
   clickedArr.push(e.target);
+
+  //display live clickScore
+  clickScore++;
+  console.log(clickScore);
+  clickScoreSpan.innerText = clickScore;
 
   //case for too many clicks too quickly (REVISIT)
   if (clickCount > 2) {
@@ -189,6 +200,9 @@ function handleCardClick(e) {
     //case for final match
     if ((clickCount === 0) && (matchedArr.length === colors.length)) {
       setTimeout(() => {
+        if (clickScore < parseInt(localStorage.best) || localStorage.best === undefined) {
+          localStorage.setItem('best', clickScore);
+        }
         alert('VICTORY!');
         resetGame();
       }, FOUND_MATCH_WAIT_MSECS);
@@ -196,6 +210,15 @@ function handleCardClick(e) {
   }
 }
 
+//only display the current best score if one exists
+function displayBestScore() {
+  if (localStorage.best === undefined) {
+    bestScoreSpan.innerText = '';
+  } else {
+    bestScoreSpan.innerText = localStorage.best;
+  }
+}
+displayBestScore();
 
 //function to determine if the two clicks are a match
 function isMatch(clickOne, clickTwo) {
@@ -229,8 +252,8 @@ function resetGame() {
  * revisit color and number hardcoding
  * (allow for variable number of cards and randomized colors or images)
  * improve too many clicks reaction (non-alert)
- * create a number of guesses display to keep score
- * store best lowest time / fewest guesses score in local storage
+ * style scores display
  * need to improve case for last match (victory condition)
  * -- reach thought: add shuffle animation at the beginning that deals out cards
+ * -- bug : when same card is clicked twice quickly, it doesn't reset properly
 */
