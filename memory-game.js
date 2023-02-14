@@ -42,7 +42,7 @@ function shuffle(items) {
   return items;
 }
 
-//randomly generated colors for title
+//randomly generate colors for title
 function createHeader() {
   const h1 = document.createElement('h1');
   for (let i = 0; i < title.length; i++) {
@@ -51,6 +51,12 @@ function createHeader() {
     const random = Math.floor(Math.random() * COLORS.length);
     charSpan.style.color = COLORS[random];
     charSpan.classList.add('title-char');
+    if (i === 1) {
+      charSpan.classList.add('first-e');
+    }
+    if (i === title.length - 1) {
+      charSpan.classList.add('last-e');
+    }
     h1.appendChild(charSpan);
   }
   header.appendChild(h1);
