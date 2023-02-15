@@ -11,34 +11,22 @@ const COLORS = [
 const colors = shuffle(COLORS);
 const header = document.querySelector('#header');
 const btnContainer = document.querySelector('.button-container');
-const timerContainer = document.querySelector('#timer-container');
 const clockContainer = document.querySelector('#clock-container');
 const startBtn = document.querySelector('#start');
 const clock = document.querySelector('#clock');
 const title = 'MEMORY_GAME';
 const clickScoreSpan = document.querySelector('#clickScore');
 const bestScoreSpan = document.querySelector('#bestScore');
-
 startBtn.addEventListener('click', startTimer);
 
-createHeader();
-
-
-/** Shuffle array items in-place and return shuffled array. */
-
+/** (Fisher-Yates) Shuffle array items in-place and return shuffled array. */
 function shuffle(items) {
-  // This algorithm does a "perfect shuffle", where there won't be any
-  // statistical bias in the shuffle (many naive attempts to shuffle end up not
-  // be a fair shuffle). This is called the Fisher-Yates shuffle algorithm; if
-  // you're interested, you can learn about it, but it's not important.
-
   for (let i = items.length - 1; i > 0; i--) {
     // generate a random index between 0 and i
     let j = Math.floor(Math.random() * i);
     // swap item at i <-> item at j
     [items[i], items[j]] = [items[j], items[i]];
   }
-
   return items;
 }
 
@@ -102,7 +90,7 @@ function createCards(colors) {
   //so I can later compare the data-ids to confirm that the same card wasn't
   //clicked twice to create the match
   for (let i = 0; i < colors.length; i++) {
-    //create each card and add classes (card, face-down, and color) to it
+    //create each card and add classes (card and face-down) to it
     //add attributes (data-id and data-color) to the card
     //add eventListener for handling the click event to each card
     //then append it to the gameboard
@@ -118,9 +106,9 @@ function createCards(colors) {
     card.setAttribute('data-color', colors[i]);
     card.setAttribute('data-id', i);
     card.addEventListener('click', handleCardClick);
+    card.appendChild(front);
 
     gameBoard.appendChild(card);
-    card.appendChild(front);
   }
 }
 
@@ -138,8 +126,7 @@ function unFlipCard(card) {
   card.classList.remove('unclickable');
 }
 
-/** Handle clicking on a card: this could be first-card or second-card.
- *
+/** Handle clicking on a card:
  *  Create a counter to store click count that stops at two
  *  push two click events into a clickedArr
  *  compare the values of those two click event targets
@@ -157,12 +144,11 @@ let clickCount = 0;
 //store a clickScore to keep best score in local storage
 let clickScore = 0;
 
-function handleCardClick(e) {
 
-  /**
-   * flip target of click event
-   * increment click counter
-   * push target into clickedArr
+function handleCardClick(e) {
+  /** Flip target of click event
+   *  Increment click counter
+   *  push target into clickedArr
    */
 
   flipCard(e.target);
@@ -227,7 +213,6 @@ function displayBestScore() {
     bestScoreSpan.innerText = localStorage.best;
   }
 }
-displayBestScore();
 
 //function to determine if the two clicks are a match
 function isMatch(clickOne, clickTwo) {
@@ -246,14 +231,13 @@ function resetClickedArr() {
   clickedArr = [];
 }
 
-// function resetMatchedArr() {
-//   matchedArr = [];
-// }
-
-//(need to refactor this so a win can store the score before reset game occurs)
 function resetGame() {
   location.reload();
 }
+
+//functions that run on load
+createHeader();
+displayBestScore();
 
 /** TODOS
 
@@ -263,5 +247,5 @@ function resetGame() {
  * need to improve case for last match (victory condition)
  * -- reach thought: add shuffle animation at the beginning that deals out cards
 
- *  * improve too many clicks reaction (non-alert)
+ * improve too many clicks reaction (non-alert)
 */
