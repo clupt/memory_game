@@ -97,7 +97,6 @@ h1 {
   justify-content: center;
   height: 200px;
   background-color: var(--secondary);
-  /* overflow: hidden; */
 }
 
 /* button styling */
@@ -144,6 +143,10 @@ h1 {
 
 .scorekeeper {
   margin: 3px;
+}
+
+.hidden {
+  display: none;
 }
 
 /* game board styling */

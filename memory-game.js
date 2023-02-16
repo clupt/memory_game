@@ -18,6 +18,7 @@ const title = 'MEMORY_GAME';
 const clickScoreSpan = document.querySelector('#clickScore');
 const bestScoreSpan = document.querySelector('#bestScore');
 const bestTimeSpan = document.querySelector('#bestTime');
+const current = document.querySelector('.hidden');
 
 startBtn.addEventListener('click', startTimer);
 
@@ -68,12 +69,17 @@ function timer() {
   console.log(seconds);
 }
 
-//start the timer and call timer function with setinterval to run the clock
-//also remove the start button and populate the gameBoard
+/*
+  start the timer and call timer function with setinterval to run the clock
+  remove the start button and populate the gameBoard
+  reveal current score div when game starts
+*/
+
 function startTimer() {
   createCards(colors);
   btnContainer.remove();
   addTimer();
+  current.classList.remove('hidden');
   let interval = setInterval(timer, 1000);
 }
 
@@ -217,7 +223,7 @@ function displayBestScore() {
     bestScoreSpan.innerText = localStorage.best;
   }
 }
-
+//only display the current fastest time if one exists
 function displayFastestTime() {
   if (localStorage.fastest === undefined) {
     bestTimeSpan.innerText = '';
@@ -256,9 +262,6 @@ displayFastestTime();
 
  * revisit color and number hardcoding
  * (allow for variable number of cards and randomized colors or images)
-
- * need to improve case for last match (victory condition)
- * -- reach thought: add shuffle animation at the beginning that deals out cards
 
  * improve too many clicks reaction (non-alert)
 */
