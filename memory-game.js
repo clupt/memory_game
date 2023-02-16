@@ -17,6 +17,8 @@ const clock = document.querySelector('#clock');
 const title = 'MEMORY_GAME';
 const clickScoreSpan = document.querySelector('#clickScore');
 const bestScoreSpan = document.querySelector('#bestScore');
+const bestTimeSpan = document.querySelector('#bestTime');
+
 startBtn.addEventListener('click', startTimer);
 
 /** (Fisher-Yates) Shuffle array items in-place and return shuffled array. */
@@ -62,10 +64,8 @@ let seconds = 0;
 //timer function to increment the clock
 function timer() {
   seconds++;
-  if (seconds < 10) {
-    seconds = '0' + seconds;
-  }
-  clock.innerText = `: ${seconds}`;
+  clock.innerText = `: ${seconds.toString().padStart(2, 0)}`;
+  console.log(seconds);
 }
 
 //start the timer and call timer function with setinterval to run the clock
@@ -196,8 +196,12 @@ function handleCardClick(e) {
         if (clickScore < parseInt(localStorage.best) || localStorage.best === undefined) {
           localStorage.setItem('best', clickScore);
           alert(`A new best! Your score was ${clickScore}.`);
+        }
+        if (seconds < parseInt(localStorage.fastest) || localStorage.fastest === undefined) {
+          localStorage.setItem('fastest', seconds);
+          (alert(`Fastest time yet! Your time was ${seconds} seconds.`));
         } else {
-          alert(`Nice! Your score was ${clickScore}.`);
+          alert(`Nice! Your score was ${clickScore} and your time was ${seconds} seconds.`);
         }
         resetGame();
       }, FOUND_MATCH_WAIT_MSECS);
@@ -211,6 +215,14 @@ function displayBestScore() {
     bestScoreSpan.innerText = '';
   } else {
     bestScoreSpan.innerText = localStorage.best;
+  }
+}
+
+function displayFastestTime() {
+  if (localStorage.fastest === undefined) {
+    bestTimeSpan.innerText = '';
+  } else {
+    bestTimeSpan.innerText = localStorage.fastest;
   }
 }
 
@@ -238,6 +250,7 @@ function resetGame() {
 //functions that run on load
 createHeader();
 displayBestScore();
+displayFastestTime();
 
 /** TODOS
 
