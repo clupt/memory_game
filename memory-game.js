@@ -42,6 +42,7 @@ function createHeader() {
     const random = Math.floor(Math.random() * COLORS.length);
     charSpan.style.color = COLORS[random];
     charSpan.classList.add('title-char');
+    //grab the two spans with e and add classes to allow for flip animations
     if (i === 1) {
       charSpan.classList.add('first-e');
     }
@@ -66,7 +67,6 @@ let seconds = 0;
 function timer() {
   seconds++;
   clock.innerText = `: ${seconds.toString().padStart(2, 0)}`;
-  console.log(seconds);
 }
 
 /*
@@ -83,23 +83,28 @@ function startTimer() {
   let interval = setInterval(timer, 1000);
 }
 
-/** Create card for every color in colors (each will appear twice)
- *
- *  Each div DOM element will have:
- * - a class with the value of the color
- * - a click event listener for each card to handleCardClick
- */
+/*
+  Create card for every color in colors (each will appear twice)
+
+  Each div DOM element will have:
+  - a class with the value of the color
+  - a click event listener for each card to handleCardClick
+*/
 
 function createCards(colors) {
   const gameBoard = document.getElementById("game");
-  //used a for loop here to store card's data-id attribute as its index in colors
-  //so I can later compare the data-ids to confirm that the same card wasn't
-  //clicked twice to create the match
+  /*
+    used a for loop here to store card's data-id attribute as its index in colors
+    so I can later compare the data-ids to confirm that the same card wasn't
+    clicked twice to create the match
+  */
   for (let i = 0; i < colors.length; i++) {
-    //create each card and add classes (card and face-down) to it
-    //add attributes (data-id and data-color) to the card
-    //add eventListener for handling the click event to each card
-    //then append it to the gameboard
+    /*
+      create each card and add classes (card and face-down) to it
+      add attributes (data-id and data-color) to the card
+      add eventListener for handling the click event to each card
+      then append it to the gameboard
+    */
 
     const card = document.createElement('div');
     const front = document.createElement('div');
@@ -132,13 +137,14 @@ function unFlipCard(card) {
   card.classList.remove('unclickable');
 }
 
-/** Handle clicking on a card:
- *  Create a counter to store click count that stops at two
- *  push two click events into a clickedArr
- *  compare the values of those two click event targets
- *  if they have the same data-color (and different data-ids)
- *  push them into the matchedArr and reset the clickCount and clickedArr
- *  once the matchedArr length equals the colors array length --> Game Over
+/*
+  Handle clicking on a card:
+  Create a counter to store click count that stops at two
+  Push two click events into a clickedArr
+  Compare the values of those two click event targets,
+  if they have the same data-color (and different data-ids)
+  push them into the matchedArr and reset the clickCount and clickedArr
+  Once the matchedArr length equals the colors array length --> Game Over
 */
 
 //create an array for the clicked cards
@@ -152,10 +158,11 @@ let clickScore = 0;
 
 
 function handleCardClick(e) {
-  /** Flip target of click event
-   *  Increment click counter
-   *  push target into clickedArr
-   */
+  /*
+    Flip target of click event
+    Increment click counter
+    push target into clickedArr
+  */
 
   flipCard(e.target);
   clickCount += 1;
@@ -165,7 +172,7 @@ function handleCardClick(e) {
   clickScore++;
   clickScoreSpan.innerText = clickScore;
 
-  //case for too many clicks too quickly (REVISIT)
+  //case for too many clicks too quickly
   if (clickCount > 2) {
     alert('TOO MANY CLICKS IN THE CLICKTCHEN');
     unFlipCard(e.target);
@@ -215,7 +222,7 @@ function handleCardClick(e) {
   }
 }
 
-//only display the current best score if one exists
+//only display the current best score if one exists in local storage
 function displayBestScore() {
   if (localStorage.best === undefined) {
     bestScoreSpan.innerText = '';
@@ -223,7 +230,7 @@ function displayBestScore() {
     bestScoreSpan.innerText = localStorage.best;
   }
 }
-//only display the current fastest time if one exists
+//only display the current fastest time if one exists in local storage
 function displayFastestTime() {
   if (localStorage.fastest === undefined) {
     bestTimeSpan.innerText = '';
@@ -257,11 +264,3 @@ function resetGame() {
 createHeader();
 displayBestScore();
 displayFastestTime();
-
-/** TODOS
-
- * revisit color and number hardcoding
- * (allow for variable number of cards and randomized colors or images)
-
- * improve too many clicks reaction (non-alert)
-*/
